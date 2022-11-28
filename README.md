@@ -1,4 +1,4 @@
-# elibrary - Online Library
+# Elibrary - Online Library
 
 #### CATANA Dominic Costin
 #### CIUNGAN Diana Alexandra
