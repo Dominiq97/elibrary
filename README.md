@@ -11,29 +11,6 @@
 [![DRF-YASG 1.17.1](https://img.shields.io/badge/drf--yasg-1.17.1-red.svg)]()
 [![PyJWT 2.6.0](https://img.shields.io/badge/PyJWT-2.6.0-orange.svg)]()
 
-### ----------------------------------------
-#### For week 10: POST -> api/v1/books/
-
-```
-GET -> api/v1/books?title=TITLE
-GET -> api/v1/books?author=AUTHOR
-GET -> api/v1/books?publisher=PUBLISHER
-```
-
-Signup Administrators:
-```
-POST api/v1/administrators/ add admins in the collection of admins
-```
-
-Signup Customers and show list of customers:
-```
-GET api/v1/customers - get list of custs
-POST api/v1/customers - signup customers
-```
-
-#### Simple JWT -> OAuth2 study<br>
-
-### Revise the REST API from above
 ### mapping on elastic search
 ### Revise indices and mapping for next time
 ### add some data into elastic search to have something to work with
@@ -67,14 +44,14 @@ RESTful API design:<br>
 Search for books:<br>
  ```sh
   GET /api/v1/books
-  GET /api/v1/books/titleOfBook
-  GET /api/v1/books/filter/author/authorOfBook
-  GET /api/v1/books/filter/publisher/publisherOfBook 
+  GET /api/v1/books?title=TITLE
+  GET /api/v1/books?author=AUTHOR
+  GET /api/v1/books?publisher=PUBLISHER
   ```
 
 Add book to database:
 ```
-POST /api/v1/books/add_book/  //add book to database, where query is defined as a JSON with all the info packed with a header(Bearer <token>) to permit just the administrators to add books.
+POST /api/v1/books/  //add book to database, where query is defined as a JSON with all the info packed with a header(Bearer <token>) to permit just the administrators to add books.
 ```
 Delete book from database:
 ```
@@ -84,6 +61,17 @@ Update book from database
 ```
 PUT /api/v1/books/{id} – update/resave() an entire book based on id
 PATCH /api/v1/books/{id} – update the object with a few changed attribute’s value book based on id
+```
+
+Create admin account
+```
+POST /api/v1/administrators 
+```
+
+Create customer account
+```
+POST /api/v1/customers
+GET  /api/v1/customers <- get list of all customers
 ```
 
 ## Installation Instructions
