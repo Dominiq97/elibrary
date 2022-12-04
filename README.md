@@ -10,7 +10,36 @@
 [![Django Rest Framework 3.11.1](https://img.shields.io/badge/djangorestframework-3.11.1-yellow.svg)]()
 [![DRF-YASG 1.17.1](https://img.shields.io/badge/drf--yasg-1.17.1-red.svg)]()
 [![PyJWT 2.6.0](https://img.shields.io/badge/PyJWT-2.6.0-orange.svg)]()
- 
+
+### ----------------------------------------
+#### For week 10: POST -> api/v1/books/
+
+```
+GET -> api/v1/books?title=TITLE
+GET -> api/v1/books?author=AUTHOR
+GET -> api/v1/books?publisher=PUBLISHER
+```
+
+Signup Administrators:
+```
+POST api/v1/administrators/ add admins in the collection of admins
+```
+
+Signup Customers and show list of customers:
+```
+GET api/v1/customers - get list of custs
+POST api/v1/customers - signup customers
+```
+
+#### Simple JWT -> OAuth2 study<br>
+
+### Revise the REST API from above
+### mapping on elastic search
+### Revise indices and mapping for next time
+### add some data into elastic search to have something to work with
+
+### using bulk api of elasticsearch
+### ----------------------------------------
 Our project consists of an online library with the following functionalities:
 
 * for a user: <br>
