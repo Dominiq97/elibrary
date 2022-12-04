@@ -6,13 +6,14 @@ from rest_framework.decorators import api_view
 from django.http.response import JsonResponse
 from rest_framework.views import APIView
 from library_manager.models import Book
+from rest_framework.parsers import JSONParser
 from library_manager.serializer import PublisherSerializer, BookSerializer, BookRegisterSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from administrator.permissions import AdministratorsPermission
 from customer.permissions import CustomersPermission
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, ListCreateAPIView
 from rest_framework.decorators import action
 title = openapi.Parameter('title', in_=openapi.IN_QUERY,
                            type=openapi.TYPE_STRING)
@@ -33,27 +34,7 @@ FETCH_BOOK_SUCCESS = '''{{
     "author": <book author>,
 }}'''
 
-class BooksList(ListAPIView):
-    permission_classes = (AdministratorsPermission|CustomersPermission,)
-    serializer_class = BookSerializer
-    def get_queryset(self):
-        books = Book.objects.all()
-        return books
 
-class BookCreate(CreateAPIView):
-    permission_classes = [IsAuthenticated, AdministratorsPermission]
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-    permission_classes = (IsAuthenticated, AdministratorsPermission)
-
-class BookDetail(APIView):
-    permission_classes = (AdministratorsPermission|CustomersPermission,)
-    def get(self, request, title):
-        if title is not None:
-            book = Book.objects.filter(title=title)
-        books_serializer = BookSerializer(book, many=True)
-        return JsonResponse(books_serializer.data, safe=False)
-    
 class BookAdministrator(UpdateAPIView):
     serializer_class = BookSerializer
     queryset = Book.objects.all()
@@ -72,18 +53,23 @@ class BookAdministrator(UpdateAPIView):
             book = serializer.save()
         return Response({"success": "Book '{}' is updated".format(book.title)})
 
-class BookDetailAuthor(APIView):
-    permission_classes = (AdministratorsPermission|CustomersPermission,)
-    def get(self, request, author):
-        if author is not None:
-            book = Book.objects.filter(author=author)
-        books_serializer = BookSerializer(book, many=True)
-        return JsonResponse(books_serializer.data, safe=False)
 
-class BookDetailPublisher(APIView):
+class BookListView(ListCreateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
     permission_classes = (AdministratorsPermission|CustomersPermission,)
-    def get(self, request, publisher):
-        if publisher is not None:
-            book = Book.objects.filter(publisher=publisher)
-        books_serializer = BookSerializer(book, many=True)
-        return JsonResponse(books_serializer.data, safe=False)
+    def get_queryset(self):
+        title = self.request.query_params.get("title", None)
+        author = self.request.query_params.get("author", None)
+        publisher = self.request.query_params.get("publisher", None)
+        if title:
+            qs = Book.objects.filter(title__icontains=title)
+            return qs
+        if author:
+            qs = Book.objects.filter(author__icontains=author)
+            return qs
+        if publisher:
+            qs = Book.objects.filter(publisher__name__icontains=publisher)
+            return qs
+
+        return super().get_queryset()
