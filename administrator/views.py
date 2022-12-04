@@ -7,21 +7,13 @@ from rest_framework.views import APIView
 
 from administrator.models import Administrator
 from administrator.permissions import AdministratorsPermission
-from administrator.serializers import AdministratorRegisterSerializer, AdministratorSerializer
+from administrator.serializers import AdministratorSerializer
 from library_manager.models import Book
 from library_manager.serializer import BookSerializer
 
 
 class AdministratorCreate(CreateAPIView):
     queryset = Administrator.objects.all()
-    serializer_class = AdministratorRegisterSerializer
+    serializer_class = AdministratorSerializer
     permission_classes = (AllowAny,)
 
-# class AdministratorBooksList(ListAPIView):
-#     permission_classes = [IsAuthenticated,AdministratorsPermission]
-#     serializer_class = BookSerializer
-
-#     def get_queryset(self):
-#         administrator = Administrator.objects.get(user=self.request.user)
-#         books = Book.objects.filter(administrator=administrator)
-#         return books

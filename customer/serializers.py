@@ -6,7 +6,7 @@ from administrator.models import Administrator
 from customer.models import Customer
 
 
-class CustomerRegisterSerializer(serializers.ModelSerializer):
+class CustomerSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True,
         validators=[UniqueValidator(queryset=Administrator.objects.all())]
@@ -40,9 +40,3 @@ class CustomerRegisterSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
-
-
-class CustomerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Customer
-        fields = '__all__'

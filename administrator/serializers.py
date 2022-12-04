@@ -5,7 +5,7 @@ from rest_framework.validators import UniqueValidator
 from administrator.models import Administrator
 
 
-class AdministratorRegisterSerializer(serializers.ModelSerializer):
+class AdministratorSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True,
         validators=[UniqueValidator(queryset=Administrator.objects.all())]
@@ -39,10 +39,3 @@ class AdministratorRegisterSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
-
-
-class AdministratorSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Administrator
-        fields = '__all__'
-
