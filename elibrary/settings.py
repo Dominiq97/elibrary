@@ -161,7 +161,10 @@ AUTH_USER_MODEL = 'account.User'
 # Elasticsearch setup
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': 'http://ddd94ee3ceaf45728a08ab0addca58e1.containerhost:9244'
+        'hosts': 'localhost:9200',
+        'http_auth': ('elastic', 'slaDyw=Jn-FGeXo835_x'),
+        'use_ssl': True,
+        'ca_certs': 'elibrary/http_ca.crt'
     },
 }
 

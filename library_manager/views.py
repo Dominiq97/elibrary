@@ -7,7 +7,7 @@ from django.http.response import JsonResponse
 from rest_framework.views import APIView
 from library_manager.models import Book
 from rest_framework.parsers import JSONParser
-from library_manager.serializer import PublisherSerializer, BookSerializer, BookRegisterSerializer
+from library_manager.serializer import PublisherSerializer, BookSerializer, BookRegisterSerializer, BookDocumentSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from administrator.permissions import AdministratorsPermission
 from customer.permissions import CustomersPermission
@@ -15,6 +15,14 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, ListCreateAPIView
 from rest_framework.decorators import action
+
+from django_elasticsearch_dsl_drf.constants import SUGGESTER_COMPLETION
+from django_elasticsearch_dsl_drf.filter_backends import SearchFilterBackend, FilteringFilterBackend, SuggesterFilterBackend
+
+
+from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
+from library_manager.documents import BookDocument
+
 title = openapi.Parameter('title', in_=openapi.IN_QUERY,
                            type=openapi.TYPE_STRING)
 
@@ -73,3 +81,33 @@ class BookListView(ListCreateAPIView):
             return qs
 
         return super().get_queryset()
+
+
+# Elasticsearch document view
+class BookDocumentView(DocumentViewSet):
+    document = BookDocument
+    serializer_class = BookDocumentSerializer
+
+    filter_backends = [
+        FilteringFilterBackend,
+        SearchFilterBackend,
+        SuggesterFilterBackend
+    ]
+
+    search_fields = (
+        'title',
+        'author'
+    )
+
+    filter_fields = {
+        'publisher': 'publisher.name'
+    }
+
+    suggester_fields = {
+        'title': {
+            'field': 'title.suggest',
+            'suggesters': [
+                SUGGESTER_COMPLETION,
+            ],
+        }
+    }
