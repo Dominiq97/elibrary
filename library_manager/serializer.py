@@ -1,6 +1,9 @@
 from rest_framework import serializers
+from django_elasticsearch_dsl_drf.serializers import DocumentSerializer
 
 from library_manager.models import Publisher, Book
+from library_manager.documents import BookDocument
+
 from rest_framework.validators import UniqueValidator
 
 
@@ -67,3 +70,15 @@ class BookRegisterSerializer(serializers.ModelSerializer):
         return book
 
     
+class BookDocumentSerializer(DocumentSerializer):
+    class Meta:
+        document = BookDocument
+
+        fields = (
+            'title',
+            'author',
+            'publisher',
+            'year',
+            'stock',
+            'price'
+        )

@@ -49,6 +49,14 @@ Search for books:<br>
   GET /api/v1/books?publisher=PUBLISHER
   ```
 
+Search for books using ELASTICSEARCH<br>
+In order to search for books using elasticsearch, we can optionally provide a search phrase for either the book title or the author and can also specify a publisher, which is a filtering option.<br>
+ ```sh
+  GET /api/v1/booksearch
+  GET /api/v1/booksearch?search=TITLE | AUTHOR
+  GET /api/v1/booksearch?publisher=PUBLISHER
+  ```
+
 Add book to database:
 ```
 POST /api/v1/books/  //add book to database, where query is defined as a JSON with all the info packed with a header(Bearer <token>) to permit just the administrators to add books.
@@ -75,6 +83,9 @@ GET  /api/v1/customers <- get list of all customers
 ```
 
 ## Installation Instructions
+
+You must have a running elasticsearch cluster to be able to successfully run the application. In our implementation, we used a local elasticsearch cluster running in a local docker container.
+
 ### Just like that: <br>
 
 Create your own virtual environment : <br>

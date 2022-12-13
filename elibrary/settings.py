@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_elasticsearch_dsl',
+    'django_elasticsearch_dsl_drf',
     'library_manager',
     'rest_framework',
     'drf_yasg',
@@ -155,3 +157,17 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'account.User'
+
+# Elasticsearch setup
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'localhost:9200',
+        'http_auth': ('elastic', 'slaDyw=Jn-FGeXo835_x'),
+        'use_ssl': True,
+        'ca_certs': 'elibrary/http_ca.crt'
+    },
+}
+
+ELASTICSEARCH_INDEX_NAMES = {
+    'books.book': 'books',
+}
