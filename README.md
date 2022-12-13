@@ -11,12 +11,6 @@
 [![DRF-YASG 1.17.1](https://img.shields.io/badge/drf--yasg-1.17.1-red.svg)]()
 [![PyJWT 2.6.0](https://img.shields.io/badge/PyJWT-2.6.0-orange.svg)]()
 
-### mapping on elastic search
-### Revise indices and mapping for next time
-### add some data into elastic search to have something to work with
-
-### using bulk api of elasticsearch
-### ----------------------------------------
 Our project consists of an online library with the following functionalities:
 
 * for a user: <br>
