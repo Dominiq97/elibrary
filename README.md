@@ -41,20 +41,12 @@ o   price<br>
 The user and the admin can search for books depending on their name or author or publisher <br>
 
 RESTful API design:<br>
-Search for books:<br>
- ```sh
-  GET /api/v1/books
-  GET /api/v1/books?title=TITLE
-  GET /api/v1/books?author=AUTHOR
-  GET /api/v1/books?publisher=PUBLISHER
-  ```
-
 Search for books using ELASTICSEARCH<br>
 In order to search for books using elasticsearch, we can optionally provide a search phrase for either the book title or the author and can also specify a publisher, which is a filtering option.<br>
  ```sh
-  GET /api/v1/booksearch
-  GET /api/v1/booksearch?search=TITLE | AUTHOR
-  GET /api/v1/booksearch?publisher=PUBLISHER
+  GET /api/v1/books
+  GET /api/v1/books?search=TITLE | AUTHOR
+  GET /api/v1/books?publisher=PUBLISHER
   ```
 
 Add book to database:
